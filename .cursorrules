@@ -1,0 +1,76 @@
+# Project Overview: TheWall
+Develop TheWall, a social platform that allows users to create, view, edit, and delete posts, comments, and replies. This platform will include user registration and login, along with AJAX to streamline CRUD interactions. The MVC (Model-View-Controller) architecture will organize the codebase for efficient development and maintainability.
+
+# Tech Stack:
+- Backend: Node.js with Express framework
+- Frontend: JavaScript (ES6), HTML, CSS, AJAX for asynchronous requests
+- Database: MySQL
+- View Engine: EJS (Embedded JavaScript Templates)
+- Pattern: MVC (Model-View-Controller)
+
+# Key Features:
+1. User Authentication (Login & Registration Pages):
+    - A registration page to create user accounts, with basic validation for required fields.
+    - A login page to authenticate users and allow access to main application features.
+2. CRUD Operations with Validation:
+    - All create, read, update, and delete (CRUD) actions have:
+        - Client-Side Validation: Ensures that inputs are correct before sending requests.
+        - Server-Side Validation: Validates and sanitizes data server-side for security.
+3. AJAX for Smooth Interactions:
+    - AJAX enables users to create, update, and delete posts, comments, and replies without reloading the page.
+4. Dynamic Content Rendering:
+    - EJS templates dynamically render content server-side, while AJAX updates only specific portions of the page as data changes.
+5. User Interface:
+    - The login and registration pages should be created using only HTML, with no CSS.
+    - For the wall page, where posts, comments, and replies are displayed, use pure HTML for the input fields, and add CSS to manage their layout and hierarchy.
+
+Database Schema:
+CREATE TABLE `thewall`.`users` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`email_address` VARCHAR(255) NOT NULL,
+`password` VARCHAR(255) NOT NULL,
+`salt` VARCHAR(255) NOT NULL,
+`first_name` VARCHAR(255) NOT NULL,
+`last_name` VARCHAR(255) NULL DEFAULT NULL,
+`created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+`updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`));
+
+CREATE TABLE `thewall`.`posts` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`user_id` INT NOT NULL,
+`content` TEXT NOT NULL,
+`comments_count` INT NOT NULL DEFAULT 0,
+`created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+`updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`));
+
+CREATE TABLE `thewall`.`comments` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`user_id` INT NOT NULL,
+`post_id` INT NOT NULL,
+`parent_comment_id` INT NULL DEFAULT NULL,
+`content` TEXT NOT NULL,
+`replies_count` INT NOT NULL DEFAULT 0,
+`created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+`updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`));
+
+# Current File Structure:
+THEWALL/
+├── configs/
+├── controllers/
+├── helpers/
+├── models/
+├── routes/
+├── views/
+│   ├── partials/
+├── public/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── .cursorules
+├── .env
+├── .gitignore
+├── package.json
+└── server.js

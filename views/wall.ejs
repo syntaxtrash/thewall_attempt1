@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheWall - Posts and Comments</title>
+    <link rel="stylesheet" href="/css/wall.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to TheWall, <%= user.first_name %></h1>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </header>
+
+    <main>
+        <!-- Post Creation Form -->
+        <section class="post-form">
+            <form id="createPostForm">
+                <textarea name="content" placeholder="What's on your mind?" required></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </section>
+
+        <!-- Posts Display -->
+        <section class="posts">
+            <% posts.forEach(post => { %>
+                <div class="post" data-post-id="<%= post.id %>">
+                    <div class="post-header">
+                        <h3><%= post.user_name %></h3>
+                        <span class="timestamp"><%= new Date(post.created_at).toString() %></span>
+                    </div>
+                    <p class="post-content"><%= post.content %></p>
+                    
+                    <% if (post.user_id === user.id) { %>
+                        <div class="post-actions">
+                            <button class="edit-post">Edit</button>
+                            <button class="delete-post">Delete</button>
+                        </div>
+                    <% } %>
+
+                    <!-- Comment Form -->
+                    <form class="comment-form">
+                        <textarea name="content" placeholder="Write a comment..." required></textarea>
+                        <button type="submit">Comment</button>
+                    </form>
+
+                    <!-- Comments Display -->
+                    <div class="comments">
+                        <% post.comments.forEach(comment => { %>
+                            <div class="comment" data-comment-id="<%= comment.id %>">
+                                <div class="comment-header">
+                                    <h4><%= comment.user_name %></h4>
+                                    <span class="timestamp"><%= comment.created_at %></span>
+                                </div>
+                                <p class="comment-content"><%= comment.content %></p>
+                                
+                                <% if (comment.user_id === user.id) { %>
+                                    <div class="comment-actions">
+                                        <button class="edit-comment">Edit</button>
+                                        <button class="delete-comment">Delete</button>
+                                    </div>
+                                <% } %>
+
+                                <!-- Reply Form -->
+                                <form class="reply-form">
+                                    <textarea name="content" placeholder="Write a reply..." required></textarea>
+                                    <button type="submit">Reply</button>
+                                </form>
+
+                                <!-- Replies Display -->
+                                <div class="replies">
+                                    <% comment.replies.forEach(reply => { %>
+                                        <div class="reply" data-reply-id="<%= reply.id %>">
+                                            <div class="reply-header">
+                                                <h5><%= reply.user_name %></h5>
+                                                <span class="timestamp"><%= reply.created_at %></span>
+                                            </div>
+                                            <p class="reply-content"><%= reply.content %></p>
+                                            
+                                            <% if (reply.user_id === user.id) { %>
+                                                <div class="reply-actions">
+                                                    <button class="edit-reply">Edit</button>
+                                                    <button class="delete-reply">Delete</button>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            <% }) %>
+        </section>
+    </main>
+
+    <script src="/js/utils.js"></script>
+    <script src="/js/wall.js"></script>
+</body>
+</html> 
