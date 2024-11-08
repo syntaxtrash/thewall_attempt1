@@ -85,6 +85,7 @@ npm run dev
 ```
 
 ## Project Structure
+```plaintext
 thewall_attempt1/
 ├── configs/
 │   └── database.config.js
@@ -115,3 +116,4 @@ thewall_attempt1/
 ├── package.json
 ├── README.md
 └── server.js
+```
